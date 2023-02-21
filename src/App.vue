@@ -21,6 +21,7 @@ provide(ISelectedPage, selectedPdfPage);
   width: 100vw;
   grid-template-columns: 60% 40%;
   grid-template-rows: 100%;
+  background-color: rgb(231, 231, 231);
 }
 
 .flex-centered {
