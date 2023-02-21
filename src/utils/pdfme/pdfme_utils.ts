@@ -1,7 +1,7 @@
 import { fromPixelToMM } from "../conversion/conversion_utils";
 
-export function defineHeadingSchema(schema: Object, schemaInput: Object, element: HTMLElement, index: number) {
-    Object.defineProperty(schema, `heading${index}`, {
+export function defineHeadingSchema(schema: Object, schemaInput: Object, element: HTMLElement, propName: string) {
+    Object.defineProperty(schema, propName, {
         enumerable: true,
         configurable: true,
         writable: false,
@@ -15,7 +15,7 @@ export function defineHeadingSchema(schema: Object, schemaInput: Object, element
             height: element.offsetHeight
         },
     });
-    Object.defineProperty(schemaInput, `heading${index}`, {
+    Object.defineProperty(schemaInput, propName, {
         enumerable: true,
         configurable: true,
         writable: false,
@@ -23,8 +23,8 @@ export function defineHeadingSchema(schema: Object, schemaInput: Object, element
     });
 }
 
-export function defineImageSchema(schema: Object, schemaInput: Object, element: HTMLImageElement, index: number) {
-    Object.defineProperty(schema, `image${index}`, {
+export function defineImageSchema(schema: Object, schemaInput: Object, element: HTMLImageElement, propName: string) {
+    Object.defineProperty(schema, propName, {
         enumerable: true,
         configurable: true,
         writable: false,
@@ -38,7 +38,7 @@ export function defineImageSchema(schema: Object, schemaInput: Object, element: 
             height: fromPixelToMM(element.height)
         },
     });
-    Object.defineProperty(schemaInput, `image${index}`, {
+    Object.defineProperty(schemaInput, propName, {
         enumerable: true,
         configurable: true,
         writable: false,
