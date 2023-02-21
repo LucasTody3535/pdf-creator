@@ -3,13 +3,15 @@ import { computed, provide, ref } from "vue";
 import PDFContent from "./components/pdf-content/PDFContent.vue";
 import PDFControls from "./components/pdf-controls/PDFControls.vue";
 import { PDFBody } from "./models/pdf/body/PDFBody";
-import { IPDFObject, ISelectedPage } from "./symbols/symbols";
+import { IPDFObject, ISelectedPage, ISelectedPageItem } from "./symbols/symbols";
 
 const pdf = ref(new PDFBody());
 const selectedPdfPage = ref(null);
+const selectedPdfPageItem = ref(null);
 
 provide(IPDFObject, pdf);
 provide(ISelectedPage, selectedPdfPage);
+provide(ISelectedPageItem, selectedPdfPageItem);
 </script>
 
 <template>
