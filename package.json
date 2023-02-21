@@ -10,10 +10,13 @@
     "format:src": "prettier --write src"
   },
   "dependencies": {
+    "@pdfme/generator": "^1.1.5",
     "@vueuse/core": "^9.12.0",
     "destyle.css": "^4.0.0",
     "jspdf": "^2.5.1",
-    "vue": "^3.2.45"
+    "pdf-lib": "^1.17.1",
+    "vue": "^3.2.45",
+    "vue-tabler-icons": "^2.19.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
