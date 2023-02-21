@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, provide, ref } from "vue";
+import { PDFBody } from "./models/pdf/body/PDFBody";
+import { IPDFObject, ISelectedPage } from "./symbols/symbols";
+
+const pdf = ref(new PDFBody());
+const selectedPdfPage = ref(null);
+
+provide(IPDFObject, pdf);
+provide(ISelectedPage, selectedPdfPage);
+</script>
 
 <template>
   <h1>Works</h1>
