@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, provide, ref } from "vue";
+import PDFContent from "./components/pdf-content/PDFContent.vue";
+import PDFControls from "./components/pdf-controls/PDFControls.vue";
 import { PDFBody } from "./models/pdf/body/PDFBody";
 import { IPDFObject, ISelectedPage } from "./symbols/symbols";
 
@@ -11,7 +13,8 @@ provide(ISelectedPage, selectedPdfPage);
 </script>
 
 <template>
-  <h1>Works</h1>
+  <PDFContent />
+  <PDFControls data-html2canvas-ignore="true" />
 </template>
 
 <style>
