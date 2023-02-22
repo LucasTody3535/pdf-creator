@@ -9,15 +9,36 @@
 <script setup lang="ts">
 import { computed, inject, ref, watch, type Ref } from 'vue';
 import { PDFPage } from '../../models/pdf/page/PDFPage';
-import { IPDFObject, ISelectedPage } from '../../symbols/symbols';
+import { IPDFObject, ISelectedPage, ISelectedPageItem } from '../../symbols/symbols';
 import { useHTMLDropZone } from "../../composables/drag-n-drop/drag_n_drop";
 import { createHeading, createImage } from '../../utils/dom/dom_utils';
 
 const pdf = inject(IPDFObject);
 const selectedPage = ref(inject(ISelectedPage)!);
+const selectedPageItem = inject(ISelectedPageItem);
 const htmlPageRepresentationList: Ref<Array<HTMLDivElement>> = ref([]);
+let lastSelectedPDFPageItem: HTMLElement | null = null;
+
+function selectItemToEdit(ev: Event) {
+  if(lastSelectedPDFPageItem === (ev.currentTarget as HTMLElement)) {
+    selectedPageItem!.value = null;
+    lastSelectedPDFPageItem.classList.remove("selected-item");
+    lastSelectedPDFPageItem = null;
+    return;
+  }
+  lastSelectedPDFPageItem?.classList.remove("selected-item");
+  (ev.currentTarget as HTMLElement).classList.add("selected-item");
+  lastSelectedPDFPageItem = (ev.currentTarget as HTMLElement);
+  selectedPageItem!.value = (ev.currentTarget as HTMLElement);
+}
 
 function changePage(pageToUpdate: PDFPage) {
+  selectedPage.value?.getPageWrapperElements()?.forEach(content => {
+    content.removeEventListener("click", selectItemToEdit);
+  });
+  pageToUpdate.getPageWrapperElements()?.forEach(content => {
+    content.addEventListener("click", selectItemToEdit);
+  });
   const oldSelectedPage = pdf!.value.getPages().indexOf(selectedPage!.value!);
   const newSelectedPage = pdf!.value.getPages().indexOf(pageToUpdate);
   htmlPageRepresentationList.value[oldSelectedPage]?.classList.remove("selected");
@@ -49,8 +70,10 @@ function addImage() {
 }
 
 watch(computed(() => htmlPageRepresentationList.value.length), () => {
-  htmlPageRepresentationList.value.forEach((h) => {
-    useHTMLDropZone(h, {
+  const pdfPages = pdf!.value.getPages();
+  htmlPageRepresentationList.value.forEach((page, index) => {
+    pdfPages[index].updatePageWrapper(page);
+    useHTMLDropZone(page, {
       onDragEnter: (ev: DragEvent) => { ev.preventDefault() },
       onDragEnd: (ev: DragEvent) => { ev.preventDefault() },
       onDragOver: (ev: DragEvent) => {
@@ -111,5 +134,12 @@ watch(computed(() => pdf!.value.getPages().length), () => {
 .pdf-page.selected {
   border: 1px solid rgb(233, 197, 99);
   box-shadow: none;
+}
+</style>
+
+<style>
+.selected-item {
+  border: 1px solid black !important;
+  border-radius: 5px;
 }
 </style>
