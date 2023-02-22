@@ -45,6 +45,9 @@ function changePage(pageToUpdate: PDFPage) {
   if(oldSelectedPage === newSelectedPage) {
     htmlPageRepresentationList.value[oldSelectedPage]?.classList.remove("selected");
     selectedPage!.value = null;
+    selectedPageItem!.value = null;
+    lastSelectedPDFPageItem?.classList.remove("selected-item");
+    lastSelectedPDFPageItem = null;
     return;
   }
   htmlPageRepresentationList.value[oldSelectedPage]?.classList.remove("selected");
