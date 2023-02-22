@@ -107,7 +107,7 @@ watch(computed(() => htmlPageRepresentationList.value.length), () => {
 
 watch(computed(() => pdf!.value.getPages().length), () => {
   htmlPageRepresentationList.value.forEach((page, index) => {
-    pdf!.value.getPages()[index].updatePageWrapper(page);
+    pdf!.value.getPages()[index]?.updatePageWrapper(page);
   });
 });
 </script>
