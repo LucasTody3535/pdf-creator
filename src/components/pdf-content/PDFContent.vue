@@ -61,7 +61,7 @@ function changePage(pageToUpdate: PDFPage) {
 function addHeading() {
   return createHeading({
     position: "absolute",
-    fontSize: "15px",
+    fontSize: "30px",
     top: "5px",
     left: "5px",
     content: "Text sample"
