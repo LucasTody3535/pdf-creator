@@ -39,8 +39,14 @@ function changePage(pageToUpdate: PDFPage) {
   pageToUpdate.getPageWrapperElements()?.forEach(content => {
     content.addEventListener("click", selectItemToEdit);
   });
+
   const oldSelectedPage = pdf!.value.getPages().indexOf(selectedPage!.value!);
   const newSelectedPage = pdf!.value.getPages().indexOf(pageToUpdate);
+  if(oldSelectedPage === newSelectedPage) {
+    htmlPageRepresentationList.value[oldSelectedPage]?.classList.remove("selected");
+    selectedPage!.value = null;
+    return;
+  }
   htmlPageRepresentationList.value[oldSelectedPage]?.classList.remove("selected");
   htmlPageRepresentationList.value[newSelectedPage]?.classList.add("selected");
   selectedPage!.value = pageToUpdate;
