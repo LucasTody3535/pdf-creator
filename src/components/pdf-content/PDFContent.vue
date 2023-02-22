@@ -44,6 +44,9 @@ function changePage(pageToUpdate: PDFPage) {
   const newSelectedPage = pdf!.value.getPages().indexOf(pageToUpdate);
   if(oldSelectedPage === newSelectedPage) {
     htmlPageRepresentationList.value[oldSelectedPage]?.classList.remove("selected");
+    selectedPage.value?.getPageWrapperElements()?.forEach(content => {
+      content.removeEventListener("click", selectItemToEdit);
+    });
     selectedPage!.value = null;
     selectedPageItem!.value = null;
     lastSelectedPDFPageItem?.classList.remove("selected-item");
