@@ -11,7 +11,7 @@ import { computed, inject, ref, watch, type Ref } from 'vue';
 import { PDFPage } from '../../models/pdf/page/PDFPage';
 import { IPDFObject, ISelectedPage, ISelectedPageItem } from '../../symbols/symbols';
 import { useHTMLDropZone } from "../../composables/drag-n-drop/drag_n_drop";
-import { createHeading, createImage } from '../../utils/dom/dom_utils';
+import { createHeading, createImage, createParagraph } from '../../utils/dom/dom_utils';
 
 const pdf = inject(IPDFObject);
 const selectedPage = ref(inject(ISelectedPage)!);
@@ -81,6 +81,17 @@ function addImage() {
   }); 
 }
 
+function addParagraph() {
+  return createParagraph({
+    position: "absolute",
+    fontSize: "10px",
+    maxWidth: "210mm",
+    top: "5px",
+    left: "5px",
+    content: "Text sample"
+  });
+}
+
 watch(computed(() => htmlPageRepresentationList.value.length), () => {
   const pdfPages = pdf!.value.getPages();
   htmlPageRepresentationList.value.forEach((page, index) => {
@@ -103,6 +114,7 @@ watch(computed(() => htmlPageRepresentationList.value.length), () => {
 
         if(draggedElementType === "HEADING") pdfElement = addHeading();
         else if(draggedElementType === "IMAGE") pdfElement = addImage();
+        else if(draggedElementType === "PARAGRAPH") pdfElement = addParagraph();
         else return;
 
         page.appendChild(pdfElement!);
