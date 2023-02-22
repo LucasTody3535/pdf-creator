@@ -40,7 +40,6 @@ const getPageNumber = computed(() => (pdf!.value.getPages().indexOf(selectedPage
 
 function addPage() {
     pdf?.value.addPage();
-    if(selectedPage?.value === null) selectedPage.value = pdf!.value.getPages()[0];
 }
 
 function removeLastPage() {
