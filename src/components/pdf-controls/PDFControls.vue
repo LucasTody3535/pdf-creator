@@ -14,6 +14,8 @@
         </div>
         <div id="selected-page-items-edit">
             <PDFEditableHeading v-if="editHeading" :selected-page-item="selectedPageItem!" />
+            <PDFEditableImage v-if="editImage" :selected-page-item="selectedPageItem! as HTMLImageElement" />
+            <PDFEditableParagraph v-if="editParagraph" :selected-page-item="selectedPageItem!" />
         </div>
         <div id="page-info">
             <div class="flex-center-left" id="page-info-selected-page">
@@ -30,7 +32,9 @@ import { PlusIcon, MinusIcon, FileExportIcon } from "vue-tabler-icons";
 import PDFComposables from "../pdf-composables/PDFComposables.vue";
 import { Template, BLANK_PDF, generate } from '@pdfme/generator';
 import PDFEditableHeading from '../pdf-editing/pdf-editable-heading/PDFEditableHeading.vue';
+import PDFEditableImage from "../pdf-editing/pdf-editable-image/PDFEditableImage.vue";
 import { defineTextSchema, defineImageSchema } from '../../utils/pdfme/pdfme_utils';
+import PDFEditableParagraph from '../pdf-editing/pdf-editable-paragraph/PDFEditableParagraph.vue';
 
 const pdf = inject(IPDFObject);
 const selectedPage = inject(ISelectedPage);
@@ -46,9 +50,19 @@ function removeLastPage() {
 }
 
 const editHeading = ref(false);
+const editImage = ref(false);
+const editParagraph = ref(false);
 
 function isHeading() {
     return selectedPageItem!.value instanceof HTMLHeadingElement
+}
+
+function isImage() {
+    return selectedPageItem!.value instanceof HTMLImageElement;
+}
+
+function isParagraph() {
+    return selectedPageItem!.value instanceof HTMLParagraphElement;
 }
 
 function genPDF() {
@@ -56,11 +70,12 @@ function genPDF() {
     if(pages.length === 0) return;
     let actualSchema: any = {};
     let actualInput: any = {};
+    let inputs: Array<any> = [];
     let template: Template = {
         basePdf: BLANK_PDF,
         schemas: []
     };
-        actualSchema = {};
+    actualSchema = {};
     pages.forEach((page, page_index) => {
         actualInput = {};
         page.childNodes.forEach((content, content_index) => {
@@ -79,6 +94,8 @@ function genPDF() {
 
 watch(computed(() => selectedPageItem?.value), () => {
     editHeading.value = isHeading();
+    editImage.value = isImage();
+    editParagraph.value = isParagraph();
 });
 </script>
 
