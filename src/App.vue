@@ -40,4 +40,11 @@ provide(ISelectedPageItem, selectedPdfPageItem);
   align-items: center;
   justify-content: left;
 }
+
+.input-style-for-editable-pdf-content {
+  border: 1px solid rgb(199, 199, 199);
+  padding: 2px;
+  border-radius: 5px;
+  background-color: rgb(241, 241, 241);
+}
 </style>
