@@ -29,9 +29,8 @@ import { IPDFObject, ISelectedPage, ISelectedPageItem } from '../../symbols/symb
 import { PlusIcon, MinusIcon, FileExportIcon } from "vue-tabler-icons";
 import PDFComposables from "../pdf-composables/PDFComposables.vue";
 import { Template, BLANK_PDF, generate } from '@pdfme/generator';
-import { defineHeadingSchema, defineImageSchema } from "../../utils/pdfme/pdfme_utils";
-import { ALPHABET } from "../../static/alphabet/static_alphabet";
 import PDFEditableHeading from '../pdf-editing/pdf-editable-heading/PDFEditableHeading.vue';
+import { defineTextSchema, defineImageSchema } from '../../utils/pdfme/pdfme_utils';
 
 const pdf = inject(IPDFObject);
 const selectedPage = inject(ISelectedPage);
@@ -55,24 +54,23 @@ function isHeading() {
 function genPDF() {
     const pages: NodeListOf<HTMLElement> = document.querySelectorAll(".pdf-page");
     if(pages.length === 0) return;
-    let actualSchema: any;
-    let actualInput: any;
+    let actualSchema: any = {};
+    let actualInput: any = {};
     let template: Template = {
         basePdf: BLANK_PDF,
         schemas: []
     };
-    let inputs: Array<any> = [];
-    pages.forEach(page => {
         actualSchema = {};
+    pages.forEach((page, page_index) => {
         actualInput = {};
-        page.childNodes.forEach((content, index) => {
-            if(content instanceof HTMLHeadingElement) defineHeadingSchema(actualSchema, actualInput, content, ALPHABET.at(index)!);
-            else if(content instanceof HTMLImageElement) defineImageSchema(actualSchema, actualInput, content, ALPHABET.at(index)!);
+        page.childNodes.forEach((content, content_index) => {
+            if(content instanceof HTMLHeadingElement) defineTextSchema(actualSchema, actualInput, content, `heading_${content_index}${page_index}`);
+            else if(content instanceof HTMLImageElement) defineImageSchema(actualSchema, actualInput, content, `image_${content_index}${page_index}`);
+            else if(content instanceof HTMLParagraphElement) defineTextSchema(actualSchema, actualInput, content, `paragraph_${content_index}${page_index}`);
         });
-        template.schemas.push(actualSchema);
         inputs.push(actualInput);
     });
-
+    template.schemas.push(actualSchema);
     generate({ template, inputs }).then(pdf => {
         const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
         window.open(URL.createObjectURL(blob));
