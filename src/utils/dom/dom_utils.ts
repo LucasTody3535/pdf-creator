@@ -25,6 +25,7 @@ export function createHeading(data: IHeading): HTMLElement {
     heading.style.top = data.top;
     heading.style.left = data.left;
     heading.innerText = data.content;
+    heading.style.fontFamily = "sans-serif";
     return heading;
 }
 
