@@ -8,30 +8,15 @@
             </button>
             <input id="image-src" @input="updateImage" hidden accept=".jpg, .png, .jpeg" type="file" placeholder="...">
         </div>
-        <div id="edit-x-axis">
-            <label for="">Posicionamento X</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.left" type="text" placeholder="...">
-        </div>
-        <div id="edit-y-axis">
-            <label for="">Posicionamento Y</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.top" type="text" placeholder="...">
-        </div>
-        <div id="edit-height">
-            <label for="">Altura</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.height" type="text" placeholder="...">
-        </div>
-        <div id="edit-width">
-            <label for="">Comprimento</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.width" type="text" placeholder="...">
-        </div>
+        <XYAxisEditing :selected-page-item="selectedPageItem" />
+        <HeightWidthEditing :selected-page-item="selectedPageItem" />
     </div>
 </template>
 
 <script setup lang="ts">
+import HeightWidthEditing from '../sub-components/height-width-editing/HeightWidthEditing.vue';
+import XYAxisEditing from '../sub-components/x-y-axis-editing/XYAxisEditing.vue';
+
    const { selectedPageItem } = defineProps<{
         selectedPageItem: HTMLImageElement
     }>();
