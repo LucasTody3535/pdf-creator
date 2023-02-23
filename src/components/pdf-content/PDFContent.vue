@@ -164,6 +164,5 @@ watch(computed(() => pdf!.value.getPages().length), () => {
 <style>
 .selected-item {
   border: 1px solid black !important;
-  border-radius: 5px;
 }
 </style>
