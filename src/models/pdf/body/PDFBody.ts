@@ -18,4 +18,8 @@ export class PDFBody {
     getPages() {
         return this.pages;
     }
+
+    updatePagesList(list: Array<PDFPage>) {
+        this.pages = list;
+    }
 }

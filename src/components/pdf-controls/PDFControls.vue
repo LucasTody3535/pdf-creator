@@ -17,6 +17,12 @@
             title="Deletar item da página selecionada">
                 <TrashIcon size="24" color="black" />
             </div>
+            <div @click="deleteSelectedPage"
+            :style="getStyleBasedOnCurrentSelectedPage"
+            class="icon-wrapper flex-centered"
+            title="Deletar página selecionada">
+                <FileMinusIcon size="24" color="black" />
+            </div>
         </div>
         <div id="selected-page-items-edit">
             <PDFEditableHeading v-if="editHeading" :selected-page-item="selectedPageItem!" />
@@ -37,13 +43,14 @@
 <script setup lang="ts">
 import { computed, inject, type Ref, ref, watch } from 'vue';
 import { IPDFObject, ISelectedPage, ISelectedPageItem } from '../../symbols/symbols';
-import { PlusIcon, MinusIcon, FileExportIcon, TrashIcon } from "vue-tabler-icons";
+import { PlusIcon, MinusIcon, FileExportIcon, TrashIcon, FileMinusIcon } from "vue-tabler-icons";
 import PDFComposables from "../pdf-composables/PDFComposables.vue";
 import { Template, BLANK_PDF, generate } from '@pdfme/generator';
 import PDFEditableHeading from '../pdf-editing/pdf-editable-heading/PDFEditableHeading.vue';
 import PDFEditableImage from "../pdf-editing/pdf-editable-image/PDFEditableImage.vue";
 import { defineTextSchema, defineImageSchema } from '../../utils/pdfme/pdfme_utils';
 import PDFEditableParagraph from '../pdf-editing/pdf-editable-paragraph/PDFEditableParagraph.vue';
+import { PDFPage } from '../../models/pdf/page/PDFPage';
 
 const pdf = inject(IPDFObject);
 const selectedPage = inject(ISelectedPage);
@@ -52,6 +59,12 @@ const getPageNumber = computed(() => (pdf!.value.getPages().indexOf(selectedPage
 
 const getStyleBasedOnCurrentSelectedItemToEdit = computed(() => {
     return selectedPageItem!.value ?
+        "background-color: white" :
+        "background-color: #b6b6b6"
+});
+
+const getStyleBasedOnCurrentSelectedPage = computed(() => {
+    return selectedPage!.value ?
         "background-color: white" :
         "background-color: #b6b6b6"
 });
@@ -112,6 +125,18 @@ function deletePageSelectedItem() {
     if(parent) {
         parent.removeChild(selectedPageItem.value!);
         selectedPageItem.value = null;
+    }
+}
+
+function deleteSelectedPage() {
+    const page = selectedPage!.value;
+    let pagesThatWillBeKept: Array<PDFPage>;
+    let indexOfPageThatWillBeDeleted: number;
+    if(page) {
+        indexOfPageThatWillBeDeleted = pdf!.value.getPages().indexOf(page);
+        pagesThatWillBeKept = pdf!.value.getPages().filter((page, index) => index !== indexOfPageThatWillBeDeleted);
+        pdf!.value.updatePagesList(pagesThatWillBeKept);
+        selectedPage!.value = null;
     }
 }
 
