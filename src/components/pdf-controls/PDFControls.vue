@@ -5,7 +5,8 @@
             <div @click="addPage" class="icon-wrapper flex-centered" title="Adicionar nova página">
                 <PlusIcon size="24" color="black" />
             </div>
-            <div @click="removeLastPage" class="icon-wrapper flex-centered" title="Remover última página">
+            <div @click="removeLastPage" :style="getStyleBasedOnCurrentPagesQuantity"
+            class="icon-wrapper flex-centered" title="Remover última página">
                 <MinusIcon size="24" color="black" />
             </div>
             <div @click="genPDF" :style="getStyleBasedOnCurrentPagesQuantity"
