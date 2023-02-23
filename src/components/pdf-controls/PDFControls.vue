@@ -19,6 +19,9 @@
             <PDFEditableHeading v-if="editHeading" :selected-page-item="selectedPageItem!" />
             <PDFEditableImage v-if="editImage" :selected-page-item="selectedPageItem! as HTMLImageElement" />
             <PDFEditableParagraph v-if="editParagraph" :selected-page-item="selectedPageItem!" />
+            <p v-if="!editHeading && !editImage && !editParagraph" id="message" class="flex-centered">
+                Nenhum item selecionado para edição
+            </p>
         </div>
         <div id="page-info">
             <div class="flex-center-left" id="page-info-selected-page">
@@ -164,5 +167,10 @@ watch(computed(() => selectedPageItem?.value), () => {
     box-shadow: 1px 1px 4px 1px rgb(54, 54, 54);
     background-color: white;
     border-radius: 5px;
+}
+
+#message {
+    height: 100%;
+    font-size: 20px;
 }
 </style>
