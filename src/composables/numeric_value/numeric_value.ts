@@ -1,8 +1,5 @@
-import { isValidDigit, isValidNumpad } from "../../utils/validation/validation_utils";
-
 function validateKeypress(keyEvent: KeyboardEvent) {
-    if(isValidDigit(keyEvent.code) || isValidNumpad(keyEvent.code)) return;
-    keyEvent.preventDefault();
+    if(isNaN(Number(keyEvent.key))) keyEvent.preventDefault();
 }
 
 export function useRestrictToOnlyNumbersForKeypressings(input: HTMLInputElement) {
