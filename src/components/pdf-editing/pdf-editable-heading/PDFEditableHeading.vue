@@ -6,11 +6,7 @@
                 <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.innerText" type="text" placeholder="...">
             </div>
             <XYAxisEditing :selected-page-item="selectedPageItem" />
-            <div id="edit-font-size">
-                <label for="">Tam. da Fonte</label>
-                <br>
-                <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.fontSize" type="text" placeholder="...">
-            </div>
+            <FontSizeEditing :selected-page-item="selectedPageItem" />
             <div id="edit-font-color">
                 <label for="">Cor da Fonte</label>
                 <br>
@@ -25,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+    import FontSizeEditing from '../sub-components/font-size-editing/FontSizeEditing.vue';
     import XYAxisEditing from '../sub-components/x-y-axis-editing/XYAxisEditing.vue';
 
     const { selectedPageItem } = defineProps<{
