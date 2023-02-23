@@ -12,8 +12,8 @@ export function defineTextSchema(schema: Object, schemaInput: Object, element: H
         value: {
             type: "text",
             position: {
-                x: fromPixelToMM(element.offsetLeft),
-                y: fromPixelToMM(element.offsetTop)
+                x: Number(element.style.left.replaceAll("mm", "")),
+                y: Number(element.style.top.replaceAll("mm", ""))
             },
             fontColor: hex,
             fontSize: fSize,
@@ -37,11 +37,11 @@ export function defineImageSchema(schema: Object, schemaInput: Object, element: 
         value: {
             type: "image",
             position: {
-                x: fromPixelToMM(element.offsetLeft),
-                y: fromPixelToMM(element.offsetTop)
+                x: Number(element.style.left.replaceAll("mm", "")),
+                y: Number(element.style.top.replaceAll("mm", ""))
             },
-            width: fromPixelToMM(element.width),
-            height: fromPixelToMM(element.height)
+            width: Number(element.style.width.replaceAll("mm", "")),
+            height: Number(element.style.height.replaceAll("mm", ""))
         },
     });
     Object.defineProperty(schemaInput, propName, {
