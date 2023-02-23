@@ -8,20 +8,12 @@
         <XYAxisEditing :selected-page-item="selectedPageItem" />
         <FontSizeEditing :selected-page-item="selectedPageItem" />
         <HeightWidthEditing :selected-page-item="selectedPageItem" />
-        <div id="edit-font-color">
-            <label for="">Cor da Fonte</label>
-            <br>
-            <select v-model="selectedPageItem!.style.color" id="" class="input-style-for-editable-pdf-content">
-                <option value="#000000">Preto</option>
-                <option value="#ffffff">Branco</option>
-                <option value="#f31e0f">Vermelho</option>
-                <option value="#50ec31">Verde</option>
-            </select>
-        </div>
+        <FontColorEditing :selected-page-item="selectedPageItem" />
     </div>
 </template>
 
 <script setup lang="ts">
+    import FontColorEditing from '../sub-components/font-color-editing/FontColorEditing.vue';
     import FontSizeEditing from '../sub-components/font-size-editing/FontSizeEditing.vue';
     import HeightWidthEditing from '../sub-components/height-width-editing/HeightWidthEditing.vue';
     import XYAxisEditing from '../sub-components/x-y-axis-editing/XYAxisEditing.vue';
