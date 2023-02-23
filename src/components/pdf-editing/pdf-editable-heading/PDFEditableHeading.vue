@@ -23,7 +23,12 @@
             <div id="edit-font-color">
                 <label for="">Cor da Fonte</label>
                 <br>
-                <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.color" type="color" placeholder="...">
+                <select v-model="selectedPageItem!.style.color" id="" class="input-style-for-editable-pdf-content">
+                    <option value="#000000">Preto</option>
+                    <option value="#ffffff">Branco</option>
+                    <option value="#f31e0f">Vermelho</option>
+                    <option value="#50ec31">Verde</option>
+                </select>
             </div>
         </div>
 </template>
