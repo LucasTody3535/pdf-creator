@@ -8,7 +8,8 @@
             <div @click="removeLastPage" class="icon-wrapper flex-centered" title="Remover última página">
                 <MinusIcon size="24" color="black" />
             </div>
-            <div @click="genPDF" class="icon-wrapper flex-centered" title="Gerar pdf">
+            <div @click="genPDF" :style="getStyleBasedOnCurrentPagesQuantity"
+            class="icon-wrapper flex-centered" title="Gerar pdf">
                 <FileExportIcon size="24" color="black" />
             </div>
             <div @click="deletePageSelectedItem"
@@ -69,6 +70,12 @@ const getStyleBasedOnCurrentSelectedPage = computed(() => {
         "background-color: #b6b6b6"
 });
 
+const getStyleBasedOnCurrentPagesQuantity = computed(() => {
+    return pdf!.value.getPages()!.length > 0 ?
+        "background-color: white" :
+        "background-color: #b6b6b6"
+});
+
 function addPage() {
     pdf?.value.addPage();
 }
@@ -94,6 +101,7 @@ function isParagraph() {
 }
 
 function genPDF() {
+    if(pdf!.value.getPages()!.length < 1) return;
     const pages: NodeListOf<HTMLElement> = document.querySelectorAll(".pdf-page");
     if(pages.length === 0) return;
     let actualSchema: any = {};
