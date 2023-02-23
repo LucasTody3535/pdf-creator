@@ -6,21 +6,8 @@
             <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.innerText" type="text" placeholder="...">
         </div>
         <XYAxisEditing :selected-page-item="selectedPageItem" />
-        <div id="edit-font-size">
-            <label for="">Tam. da Fonte</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.fontSize" type="text" placeholder="...">
-        </div>
-        <div id="edit-box-width">
-            <label for="">Com. Container</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.width" type="text" placeholder="...">
-        </div>
-        <div id="edit-box-height">
-            <label for="">Alt. Container</label>
-            <br>
-            <input class="input-style-for-editable-pdf-content" v-model="selectedPageItem!.style.height" type="text" placeholder="...">
-        </div>
+        <FontSizeEditing :selected-page-item="selectedPageItem" />
+        <HeightWidthEditing :selected-page-item="selectedPageItem" />
         <div id="edit-font-color">
             <label for="">Cor da Fonte</label>
             <br>
@@ -35,6 +22,8 @@
 </template>
 
 <script setup lang="ts">
+    import FontSizeEditing from '../sub-components/font-size-editing/FontSizeEditing.vue';
+    import HeightWidthEditing from '../sub-components/height-width-editing/HeightWidthEditing.vue';
     import XYAxisEditing from '../sub-components/x-y-axis-editing/XYAxisEditing.vue';
 
     const { selectedPageItem } = defineProps<{
