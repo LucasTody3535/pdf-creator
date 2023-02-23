@@ -1,7 +1,7 @@
 import { fromPixelToMM, fromPixelToPT } from "../conversion/conversion_utils";
 
 export function defineTextSchema(schema: Object, schemaInput: Object, element: HTMLElement, propName: string) {
-    const fSize = Number(fromPixelToPT(Number(element.style.fontSize.replaceAll("px", ""))).toFixed(0));
+    const fSize = Number(fromPixelToPT(Number(element.style.fontSize.replaceAll("px", ""))));
     const computedStyle = getComputedStyle(element).color.match(/\d+/g)!;
     const hex = `#${parseInt(computedStyle[0]).toString(16)}${parseInt(computedStyle[1]).toString(16)}${parseInt(computedStyle[2]).toString(16)}`;
     const isHeading = element instanceof HTMLHeadingElement;
@@ -16,7 +16,7 @@ export function defineTextSchema(schema: Object, schemaInput: Object, element: H
                 y: Number(element.style.top.replaceAll("mm", ""))
             },
             fontColor: hex,
-            fontSize: fSize,
+            fontSize: fSize - 1,
             width: isHeading ? element.offsetWidth : fromPixelToMM(element.offsetWidth),
             height: isHeading ? element.offsetHeight : fromPixelToMM(element.offsetHeight),
         },
