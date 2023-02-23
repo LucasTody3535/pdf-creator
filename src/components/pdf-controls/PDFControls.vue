@@ -11,6 +11,9 @@
             <div @click="genPDF" class="icon-wrapper flex-centered" title="Gerar pdf">
                 <FileExportIcon size="24" color="black" />
             </div>
+            <div @click="deletePageSelectedItem" class="icon-wrapper flex-centered" title="Deletar item da página selecionada">
+                <TrashIcon size="24" color="black" />
+            </div>
         </div>
         <div id="selected-page-items-edit">
             <PDFEditableHeading v-if="editHeading" :selected-page-item="selectedPageItem!" />
@@ -28,7 +31,7 @@
 <script setup lang="ts">
 import { computed, inject, type Ref, ref, watch } from 'vue';
 import { IPDFObject, ISelectedPage, ISelectedPageItem } from '../../symbols/symbols';
-import { PlusIcon, MinusIcon, FileExportIcon } from "vue-tabler-icons";
+import { PlusIcon, MinusIcon, FileExportIcon, TrashIcon } from "vue-tabler-icons";
 import PDFComposables from "../pdf-composables/PDFComposables.vue";
 import { Template, BLANK_PDF, generate } from '@pdfme/generator';
 import PDFEditableHeading from '../pdf-editing/pdf-editable-heading/PDFEditableHeading.vue';
@@ -90,6 +93,14 @@ function genPDF() {
         const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
         window.open(URL.createObjectURL(blob));
     });
+}
+
+function deletePageSelectedItem() {
+    const parent = selectedPageItem?.value?.parentElement;
+    if(parent) {
+        parent.removeChild(selectedPageItem.value!);
+        selectedPageItem.value = null;
+    }
 }
 
 watch(computed(() => selectedPageItem?.value), () => {
