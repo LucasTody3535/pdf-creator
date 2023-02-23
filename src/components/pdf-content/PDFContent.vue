@@ -62,8 +62,8 @@ function addHeading() {
   return createHeading({
     position: "absolute",
     fontSize: "30px",
-    top: "5px",
-    left: "5px",
+    top: "0mm",
+    left: "0mm",
     content: "Text sample"
   });
 }
@@ -86,8 +86,8 @@ function addParagraph() {
     position: "absolute",
     fontSize: "10px",
     maxWidth: "210mm",
-    top: "5px",
-    left: "5px",
+    top: "0mm",
+    left: "0mm",
     content: "Text sample"
   });
 }
