@@ -1,5 +1,5 @@
 <template>
-    <div id="edit-font-size">
+    <div ref="font_size_input" id="edit-font-size">
         <label for="">Tam. da Fonte(px)</label>
         <br>
         <input class="input-style-for-editable-pdf-content"
@@ -10,7 +10,10 @@
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { computed, onMounted, type Ref, ref } from 'vue';
+    import { useRestrictToOnlyNumbersForKeypressings } from '../../../../composables/numeric_value/numeric_value';
+
+    const font_size_input: Ref<HTMLInputElement | null> = ref(null);
 
     const { selectedPageItem } = defineProps<{
         selectedPageItem: HTMLElement
@@ -25,6 +28,10 @@
         const input = (ev.currentTarget as HTMLInputElement);
         selectedPageItem.style.fontSize = `${input.value}px`;
     }
+
+    onMounted(() => {
+        useRestrictToOnlyNumbersForKeypressings(font_size_input.value!);
+    });
 </script>
 
 <style scoped>
