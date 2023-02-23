@@ -11,7 +11,10 @@
             <div @click="genPDF" class="icon-wrapper flex-centered" title="Gerar pdf">
                 <FileExportIcon size="24" color="black" />
             </div>
-            <div @click="deletePageSelectedItem" class="icon-wrapper flex-centered" title="Deletar item da página selecionada">
+            <div @click="deletePageSelectedItem"
+            :style="getStyleBasedOnCurrentSelectedItemToEdit"
+            class="icon-wrapper flex-centered"
+            title="Deletar item da página selecionada">
                 <TrashIcon size="24" color="black" />
             </div>
         </div>
@@ -46,6 +49,12 @@ const pdf = inject(IPDFObject);
 const selectedPage = inject(ISelectedPage);
 const selectedPageItem = inject(ISelectedPageItem);
 const getPageNumber = computed(() => (pdf!.value.getPages().indexOf(selectedPage!.value!) + 1));
+
+const getStyleBasedOnCurrentSelectedItemToEdit = computed(() => {
+    return selectedPageItem!.value ?
+        "background-color: white" :
+        "background-color: #b6b6b6"
+});
 
 function addPage() {
     pdf?.value.addPage();
