@@ -22,13 +22,12 @@
 <script setup lang="ts">
    import { onMounted, type Ref, ref } from "vue";
    import { useRestrictToOnlyNumbersForKeypressings } from "../../../../composables/numeric_value/numeric_value";
-   import { isValidDigit, isValidNumpad } from "../../../../utils/validation/validation_utils";
 
    let x_axis_input: Ref<HTMLInputElement | null> = ref(null);
    let y_axis_input: Ref<HTMLInputElement | null> = ref(null);
 
    const { selectedPageItem } = defineProps<{
-        selectedPageItem: HTMLImageElement
+        selectedPageItem: HTMLElement
    }>();
 
    function changeXAxis(ev: Event) {
