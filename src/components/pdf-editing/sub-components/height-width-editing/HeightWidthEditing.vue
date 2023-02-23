@@ -28,7 +28,7 @@
     let width_input: Ref<HTMLInputElement | null> = ref(null);
 
     const { selectedPageItem } = defineProps<{
-        selectedPageItem: HTMLImageElement
+        selectedPageItem: HTMLElement
     }>();
 
     function changeHeight(ev: Event) {
