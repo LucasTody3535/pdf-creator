@@ -156,7 +156,7 @@ watch(computed(() => pdf!.value.getPages().length), () => {
 }
 
 .pdf-page.selected {
-  border: 1px solid rgb(233, 197, 99);
+  border: 1px solid black;
   box-shadow: none;
 }
 </style>
